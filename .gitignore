@@ -1,0 +1,5 @@
+alertmanager-data
+grafana-data
+prometheus-data
+.idea
+.vscode

@@ -18,7 +18,7 @@ services:
       - '--web.enable-lifecycle'
 
   grafana:
-    image: grafana/grafana:8.2.2
+    image: grafana/grafana:8.2.2 
     user: 1000:1000
     container_name: grafana
     ports:
@@ -28,7 +28,6 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana-data:/var/lib/grafana
     environment:
-      - GF_INSTALL_PLUGINS=natel-discrete-panel,bessler-pictureit-panel,grafana-clock-panel,grafana-piechart-panel,neocat-cal-heatmap-panel,petrslavotinek-carpetplot-panel,flant-statusmap-panel,mxswat-separator-panel,michaeldmoore-multistat-panel,savantly-heatmap-panel
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false  

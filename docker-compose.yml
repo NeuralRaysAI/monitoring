@@ -43,7 +43,24 @@ services:
       - ./alertmanager-data:/data
     command: --config.file=/config/alertmanager.yml --log.level=debug 
 
+  cadvisor:
+    image: 'google/cadvisor:latest'
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk:/dev/disk/:ro    
+    ports:
+      - 9092:8080 
+    restart: always
 
+  node-exporter:
+    image: "prom/node-exporter"
+    ports:
+      - 9100:9100
+    restart: always
   caddy:
     image: stefanprodan/caddy
     container_name: caddy

@@ -30,7 +30,20 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - GF_USERS_ALLOW_SIGN_UP=false  
+      - GF_USERS_ALLOW_SIGN_UP=false
+
+  cadvisor:
+    image: 'google/cadvisor:latest'
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk:/dev/disk/:ro    
+    ports:
+      - 9092:8080 
+    restart: always        
 
   alertmanager:
     image: prom/alertmanager:v0.23.0
@@ -43,6 +56,11 @@ services:
       - ./alertmanager-data:/data
     command: --config.file=/config/alertmanager.yml --log.level=debug 
 
+  node-exporter:
+    image: "prom/node-exporter"
+    ports:
+      - 9100:9100
+    restart: always
 
   caddy:
     image: stefanprodan/caddy

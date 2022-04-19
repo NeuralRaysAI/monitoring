@@ -88,7 +88,7 @@ services:
     container_name: prometheus-msteams
     restart: unless-stopped
     environment:
-        - TEAMS_INCOMING_WEBHOOK_URL=https://neuralraysai.webhook.office.com/webhookb2/a91155c5-c398-4649-bab1-da10644314ba@76015437-c81b-4212-bb16-d81ed693aa5f/IncomingWebhook/d76c15bf214a4cb9be0ddae0a019515b/69878b73-495f-4303-beda-057f94271ee9
+        - TEAMS_INCOMING_WEBHOOK_URL=
         - TEAMS_REQUEST_URI=alertmanager    
 networks:
   default:

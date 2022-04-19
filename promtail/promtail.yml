@@ -21,3 +21,14 @@ scrape_configs:
         env: dev
         host: monitoring-dev
         __path__: /var/log/*.log
+
+  - job_name: docker-logs
+    pipeline_stages:
+    - docker: {}
+    static_configs:
+    - targets: 
+        - localhost
+      labels: 
+        job: container
+        host: docker    # label-1
+        __path__: /var/lib/docker/containers/*/*-json.log     

@@ -18,14 +18,14 @@ groups:
           summary: 'Alert with high severity.'
 
       # Alert for any instance that is unreachable for >2 minutes.
-      - alert: service_down
+      - alert: MicorserviceDown
         expr: up == 0
-        for: 2m
+        for: 1m
         labels:
-          severity: page
+          severity: "critical"
         annotations:
-          summary: "Instance {{ $labels.instance }} down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 2 minutes."
+          summary: "Endpoint {{ $labels.instance }} down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes." 
 
       - alert: high_load
         expr: node_load1 > 0.5
@@ -36,14 +36,7 @@ groups:
           summary: "Instance {{ $labels.instance }} under high load"
           description: "{{ $labels.instance }} of job {{ $labels.job }} is under high load."
 
-      - alert: jobsDown
-        expr: up == 0
-        for: 1m
-        labels:
-          severity: "critical"
-        annotations:
-          summary: "Endpoint {{ $labels.instance }} down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes."           
+          
 
       - alert: HostOutOfMemory
         expr: node_memory_MemAvailable / node_memory_MemTotal * 100 < 25

@@ -6,9 +6,16 @@ route:
 receivers:
   - name: 'mail'
     email_configs:
-      - smarthost: 'yourmailhost.com:465'
-        auth_username: 'yourmail@yourmailhost.com'
-        auth_password: "your mail password"
-        from: 'yourmail@yourmailhost.com'
-        to: 'someonesmail@yourmailhost.com'
+      - smarthost: 'smtp.office365.com:465'
+        auth_username: 'support@n7banking.com'
+        auth_password: ""
+        from: 'support@n7banking.com'
+        to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI'
         require_tls: false
+        
+inhibit_rules:
+    - source_match:
+        severity: critical
+    - target_match:
+        severity: warning
+    - equal: ['alertname', 'dev', 'instance']

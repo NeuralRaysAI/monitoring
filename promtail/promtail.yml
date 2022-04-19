@@ -4,29 +4,20 @@ server:
   grpc_listen_port: 0
 
 positions:
-
   filename: /tmp/positions.yaml
 
 client:
 
-  url: http://loki:3100/api/prom/push
+  url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
 
-  - job_name: system
-    entry_parser: raw
+  - job_name: messages
     static_configs:
     - targets:
         - localhost
       labels:
-        job: varlogs
-        __path__: /var/log/*log
-
-  - job_name: master
-    entry_parser: raw
-    static_configs:
-    - targets:
-        - 'master:8080'
-      labels:
-        job: 'master'
-        __path__: /logs/*log
+        job: all-logs
+        env: dev
+        host: monitoring-dev
+        __path__: /var/log/*.log

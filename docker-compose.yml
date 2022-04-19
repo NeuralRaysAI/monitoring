@@ -72,7 +72,7 @@ services:
     ports:
       - 9100:9100
     restart: always
-
+ 
   caddy:
     image: stefanprodan/caddy
     container_name: caddy
@@ -82,3 +82,6 @@ services:
       - ADMIN_USER=${ADMIN_USER}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     restart: unless-stopped
+networks:
+  default:
+      name: devops

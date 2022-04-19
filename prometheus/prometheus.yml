@@ -28,4 +28,8 @@ scrape_configs:
   - job_name: 'config-jmx'
     static_configs:
       - targets:
-          - 'config:8080'          
+          - 'config:8080' 
+  - job_name: 'master'
+    static_configs:
+      - targets:
+          - 'master:8080'                   

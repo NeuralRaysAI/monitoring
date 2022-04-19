@@ -56,6 +56,17 @@ services:
       - ./alertmanager-data:/data
     command: --config.file=/config/alertmanager.yml --log.level=debug 
 
+  loki:
+    image: grafana/loki:2.5.0
+    ports:
+      - 9094:3100
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:2.5.0
+    volumes:
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
   node-exporter:
     image: "prom/node-exporter"
     ports:

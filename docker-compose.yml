@@ -28,6 +28,9 @@ services:
     volumes:
       - ./loki/config.yaml:/etc/loki/config.yaml
       - ./loki:/data/loki
+    entrypoint:
+     - /usr/bin/loki
+     - -config.file=/etc/config/loki.yaml  
 
   promtail:
     image: grafana/promtail:latest

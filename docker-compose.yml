@@ -65,7 +65,7 @@ services:
       - "9300:9300"
     environment:
       discovery.type: single-node
-      xpack.security.enabled: false
+      xpack.security.enabled: true
       ES_JAVA_OPTS: "-Xms512m -Xmx512m"
     healthcheck:
       test: "curl -f http://localhost:9200 || exit 1"
@@ -78,8 +78,6 @@ services:
       - "5044:5044"
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline/
-    depends_on:
-      - elasticsearch
     healthcheck:
       test: "curl -f http://localhost:9600 || exit 1"
 

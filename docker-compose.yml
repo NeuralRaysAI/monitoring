@@ -19,27 +19,27 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
       - '--web.enable-lifecycle'
 
-  loki:
-    image: grafana/loki:latest
-    container_name: loki
-    ports:
-       - 9500:3100
-    command: -config.file=/etc/loki/local-config.yaml
-    volumes:
-      - ./loki/config.yaml:/etc/loki/config.yaml
-      - ./loki:/data/loki
-    entrypoint:
-     - /usr/bin/loki
-     - -config.file=/etc/config/loki.yaml  
+  # loki:
+  #   image: grafana/loki:latest
+  #   container_name: loki
+  #   ports:
+  #      - 9500:3100
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   volumes:
+  #     - ./loki/config.yaml:/etc/loki/config.yaml
+  #     - ./loki:/data/loki
+  #   entrypoint:
+  #    - /usr/bin/loki
+  #    - -config.file=/etc/config/loki.yaml  
 
-  promtail:
-    image: grafana/promtail:latest
-    container_name: promtail
-    volumes:
-      - /var/log:/var/log
-      - /var/lib/docker/containers:/var/lib/docker/containers
-      - ./promtail:/etc/promtail-config/
-    command: -config.file=/etc/promtail-config/promtail.yml      
+  # promtail:
+  #   image: grafana/promtail:latest
+  #   container_name: promtail
+  #   volumes:
+  #     - /var/log:/var/log
+  #     - /var/lib/docker/containers:/var/lib/docker/containers
+  #     - ./promtail:/etc/promtail-config/
+  #   command: -config.file=/etc/promtail-config/promtail.yml      
   grafana:
     image: grafana/grafana:8.2.2 
     user: 1000:1000
@@ -96,16 +96,16 @@ services:
   #   healthcheck:
   #     test: "curl -f http://localhost:9200 || exit 1"
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.15.2
-    container_name: logstash
-    restart: unless-stopped
-    ports:
-      - "5044:5044"
-    volumes:
-      - ./logstash/pipeline:/usr/share/logstash/pipeline/
-    healthcheck:
-      test: "curl -f http://localhost:9600 || exit 1"
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:7.15.2
+  #   container_name: logstash
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5044:5044"
+  #   volumes:
+  #     - ./logstash/pipeline:/usr/share/logstash/pipeline/
+  #   healthcheck:
+  #     test: "curl -f http://localhost:9600 || exit 1"
 
   # kibana:
   #   image: docker.elastic.co/kibana/kibana:7.15.2
@@ -118,13 +118,13 @@ services:
   #   healthcheck:
   #     test: "curl -f http://localhost:5601 || exit 1"
 
-  filebeat:
-    build: filebeat
-    container_name: filebeat
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/containers:/usr/share/dockerlogs/data:ro
+  # filebeat:
+  #   build: filebeat
+  #   container_name: filebeat
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - /var/lib/docker/containers:/usr/share/dockerlogs/data:ro
   node-exporter:
     image: "prom/node-exporter"
     container_name: node-exporter
@@ -147,6 +147,15 @@ services:
       - ADMIN_USER=${ADMIN_USER}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     restart: unless-stopped
+
+  prom2teams:
+    image: idealista/prom2teams:2.7.0
+    restart: unless-stopped
+    environment:
+      PROM2TEAMS_CONNECTOR: ${WEBHOOK}
+    ports:
+      - 8089:8089
+
 networks:
   default:
       name: devops

@@ -2,20 +2,32 @@ route:
   group_by: [ alertname ]
   receiver: 'mail' # default receiver
   repeat_interval: 24h
+  routes:
+    - receiver: 'teams'
+      repeat_interval: 12h
+      matchers:
+        - severity="critical"
+
+    - receiver: 'teams'
+      repeat_interval: 4h
+      matchers:
+        - severity="critical"
+
 
 receivers:
   - name: 'mail'
     email_configs:
-      - smarthost: 'smtp.office365.com:465'
+      - smarthost: 'smtp.office365.com:587'
         auth_username: 'support@n7banking.com'
         auth_password: ""
         from: 'support@n7banking.com'
         to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI'
-        require_tls: false
-        
-inhibit_rules:
-    - source_match:
-        severity: critical
-    - target_match:
-        severity: warning
-    - equal: ['alertname', 'dev', 'instance']
+        require_tls: true
+
+  - name: 'teams'
+    webhook_configs:
+      - url: "http://prom2teams:8089"
+        send_resolved: true
+
+
+   

@@ -37,7 +37,8 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets:
-          - 'master:8080'   - job_name: cadvisor
+          - 'master:8080'   
+  - job_name: cadvisor
     static_configs:
       - targets:
           - 'cadvisor:8080'

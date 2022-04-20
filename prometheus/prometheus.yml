@@ -34,21 +34,6 @@ scrape_configs:
   - job_name: cadvisor
     static_configs:
       - targets:
-          - 'cadvisor:8080'
-  - job_name: 'ContainerDown'
-    metrics_path: "/actuator"
-    scrape_interval: 5s
-    static_configs:
-      - targets:
-          - 'admin:8080'
-          - 'account:8080'
-          - 'central:8080'
-          - 'config:8080'
-          - 'customer:8080'
-          - 'gateway:8080'
-          - 'login:8080'
-          - 'master:8080' 
-          - 'report:9013'
-          - 'transcation:8080'         
+          - 'cadvisor:8080'       
 
                 

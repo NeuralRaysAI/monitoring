@@ -36,7 +36,7 @@ scrape_configs:
       - targets:
           - 'cadvisor:8080'
   - job_name: 'ContainerDown'
-    metrics_path: "/"
+    metrics_path: "/actuator"
     scrape_interval: 5s
     static_configs:
       - targets:

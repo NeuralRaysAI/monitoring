@@ -19,15 +19,8 @@ scrape_configs:
           - 'prometheus:9090'
   - job_name: grafana
     static_configs:
-      - targets: ['grafana:3000'] 
-  - job_name: cadvisor
-    static_configs:
-      - targets:
-          - 'cadvisor:8080'
-  - job_name: 'node-exporter'
-    static_configs:
-      - targets:
-          - 'node-exporter:9100'
+      - targets: 
+          - 'grafana:3000'
   - job_name: 'config-jmx'
     static_configs:
       - targets:

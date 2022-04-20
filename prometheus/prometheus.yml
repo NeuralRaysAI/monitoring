@@ -48,7 +48,7 @@ scrape_configs:
           - 'gateway:8080'
           - 'login:8080'
           - 'master:8080' 
-          - 'report:8080'
+          - 'report:9013'
           - 'transcation:8080'         
 
                 

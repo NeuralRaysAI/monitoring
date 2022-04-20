@@ -36,6 +36,7 @@ scrape_configs:
       - targets:
           - 'cadvisor:8080'
   - job_name: 'ContainerDown'
+    metrics_path: "/swagger-ui.html"
     scrape_interval: 5s
     static_configs:
       - targets:
@@ -44,13 +45,11 @@ scrape_configs:
           - 'central:8080'
           - 'config:8080'
           - 'customer:8080'
-          - 'digital:8080'
           - 'frontend:3100'
           - 'gateway:8080'
           - 'login:8080'
           - 'master:8080' 
           - 'report:8080'
-          - 'servicediscovery::8761'
           - 'transcation:8080'         
 
                 

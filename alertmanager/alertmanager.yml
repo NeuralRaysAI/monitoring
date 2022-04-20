@@ -6,12 +6,12 @@ route:
     - receiver: 'teams'
       repeat_interval: 12h
       matchers:
-        - severity="critical"
+        - severity="medium"
 
     - receiver: 'teams'
       repeat_interval: 4h
       matchers:
-        - severity="critical"
+        - severity="high"
 
 
 receivers:

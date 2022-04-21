@@ -21,12 +21,6 @@ route:
         severity: low|warning|high
       continue: true
 
-    - receiver: 'pagerduty-notifications' 
-      group_wait: 10s
-      match_re:
-        severity: low|warning|high
-      continue: true 
-
 receivers:
   - name: "email"
     email_configs:
@@ -40,10 +34,5 @@ receivers:
   - name: 'teams'
     webhook_configs:
       - url: "http://prom2teams:8089"
-        send_resolved: true
-
-  - name: 'pagerduty-notifications'
-    pagerduty_configs:
-      - service_key: 
         send_resolved: true
 

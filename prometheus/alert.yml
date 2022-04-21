@@ -65,5 +65,22 @@ groups:
           severity: warning
         annotations:
           summary: "Host high CPU load (instance {{ $labels.instance }})"
-          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"          
+          description: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}" 
+
+      # disk space alert (with resource=<instance>:<mountpoint> event=disk_space
+      - alert: disk_space
+        expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) * 100 / node_filesystem_size_bytes > 5
+        labels:
+          instance: '{{ $labels.instance }}:{{ $labels.mountpoint }}'
+        annotations:
+          value: '{{ humanize $value }}%'
+
+      # disk space alert (with resource=<instance> event=disk_util:<mountpoint>
+      - alert: disk_util
+        expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) * 100 / node_filesystem_size_bytes > 5
+        labels:
+          instance: '{{ $labels.instance }}'
+          event: '{alertname}:{{ $labels.mountpoint }}'  # python templating rendered by Alerta
+        annotations:
+          value: '{{ humanize $value }}%'
 

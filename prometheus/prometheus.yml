@@ -25,7 +25,7 @@ scrape_configs:
     static_configs:
       - targets:
           - 'config:10254'
-  - job_name: 'microservices'
+  - job_name: 'DEV-Master'
     metrics_path: "/actuator/prometheus"
     scrape_interval: 5s
     static_configs:
@@ -36,4 +36,9 @@ scrape_configs:
       - targets:
           - 'cadvisor:8080'       
 
-                
+  - job_name: 'QA-master'
+    metrics_path: "/actuator/prometheus"
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+          - '10.0.1.11:9011'                 

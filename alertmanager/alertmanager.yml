@@ -1,16 +1,11 @@
 global:
-  resolve_timeout: 5m
-  smtp_smarthost: 'smtp.office365.com:587'
-  smtp_from: 'support@n7banking.com'
-  http_config:
-    tls_config:
-      insecure_skip_verify: true
+  resolve_timeout: 1m
 
 route:
   group_by: ['severity','alertname']
   group_wait: 10s
   group_interval: 30s
-  repeat_interval: 30m
+  repeat_interval: 1m
   receiver: "email"
 
   routes:
@@ -23,34 +18,15 @@ route:
     - receiver: "email"
       group_wait: 10s
       match_re:
-        severity: low|high
+        severity: low|warning|high
       continue: true
 
-# route:
-#   group_by: [ alertname ]
-#   receiver: 'mail' # default receiver
-#   repeat_interval: 24h
-#   routes:
-#     - receiver: 'teams'
-#       repeat_interval: 10s
-#       matchers:
-#         - severity="medium"
+    - receiver: 'pagerduty-notifications' 
+      group_wait: 10s
+      match_re:
+        severity: low|warning|high
+      continue: true 
 
-#     - receiver: 'teams'
-#       repeat_interval: 10s
-#       matchers:
-#         - severity="high"
-
-
-
-  # - name: 'mail'
-  #   email_configs:
-  #     - smarthost: 'smtp.office365.com:587'
-  #       auth_username: 'support@n7banking.com'
-  #       auth_password: ""
-  #       from: 'support@n7banking.com'
-  #       to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI'
-  #       require_tls: true
 receivers:
   - name: "email"
     email_configs:
@@ -59,8 +35,15 @@ receivers:
         auth_username: 'support@n7banking.com'
         auth_identity: 'support@n7banking.com'
         auth_password: 'password'
+        send_resolved: true
 
   - name: 'teams'
     webhook_configs:
       - url: "http://prom2teams:8089"
         send_resolved: true
+
+  - name: 'pagerduty-notifications'
+    pagerduty_configs:
+      - service_key: 
+        send_resolved: true
+

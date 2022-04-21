@@ -17,13 +17,13 @@ route:
     - receiver: "teams"
       group_wait: 10s
       match_re:
-        severity: critical|warning|high
+        severity: low|warning|high
       continue: true
 
     - receiver: "email"
       group_wait: 10s
       match_re:
-        severity: critical|high
+        severity: low|high
       continue: true
 
 # route:

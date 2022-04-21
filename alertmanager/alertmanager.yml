@@ -1,11 +1,16 @@
 global:
   resolve_timeout: 1m
+  smtp_smarthost: 'smtp.office365.com:587'
+  smtp_from: 'support@n7banking.com'
+  http_config:
+    tls_config:
+      insecure_skip_verify: true
 
 route:
   group_by: ['severity','alertname']
   group_wait: 10s
-  group_interval: 30s
-  repeat_interval: 1m
+  group_interval: 10s
+  repeat_interval: 5m
   receiver: "email"
 
   routes:
@@ -21,6 +26,7 @@ route:
         severity: low|warning|high
       continue: true
 
+
 receivers:
   - name: "email"
     email_configs:
@@ -29,10 +35,8 @@ receivers:
         auth_username: 'support@n7banking.com'
         auth_identity: 'support@n7banking.com'
         auth_password: 'password'
-        send_resolved: true
 
   - name: 'teams'
     webhook_configs:
       - url: "http://prom2teams:8089"
         send_resolved: true
-

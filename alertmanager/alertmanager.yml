@@ -7,6 +7,7 @@ global:
       insecure_skip_verify: true
 
 route:
+  group_by: ['severity','alertname']
   group_wait: 10s
   group_interval: 30s
   repeat_interval: 30m
@@ -41,20 +42,25 @@ route:
 #         - severity="high"
 
 
+
+  # - name: 'mail'
+  #   email_configs:
+  #     - smarthost: 'smtp.office365.com:587'
+  #       auth_username: 'support@n7banking.com'
+  #       auth_password: ""
+  #       from: 'support@n7banking.com'
+  #       to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI'
+  #       require_tls: true
 receivers:
-  - name: 'mail'
+  - name: "email"
     email_configs:
-      - smarthost: 'smtp.office365.com:587'
+      - to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI,Pradeepkumar.A@NeuralRays.AI'
+        send_resolved: true
         auth_username: 'support@n7banking.com'
-        auth_password: ""
-        from: 'support@n7banking.com'
-        to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI'
-        require_tls: true
+        auth_identity: 'support@n7banking.com'
+        auth_password: 'password'
 
   - name: 'teams'
     webhook_configs:
       - url: "http://prom2teams:8089"
         send_resolved: true
-
-
-   

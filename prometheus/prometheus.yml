@@ -29,7 +29,41 @@ scrape_configs:
     metrics_path: "/actuator/prometheus"
     static_configs:
       - targets:
-          - ['master:8080', 'account:8080', 'admin:8080', 'login:8080', 'central:8080', 'customer:8080', 'gateway:8080', 'report:8080', 'transaction:8080']     
+          - [ 'master:8080' ]
+        labels:
+          container: 'master' 
+      - targets:
+          - [ 'admin:8080' ]
+        labels:
+          container: 'admin'   
+      - targets:
+          - [ 'account:8080' ]
+        labels:
+          container: 'account'  
+      - targets:
+          - [ 'login:8080' ]
+        labels:
+          container: 'login'  
+      - targets:
+          - [ 'central:8080' ]
+        labels:
+          container: 'central'  
+      - targets:
+          - [ 'customer:8080' ]
+        labels:
+          container: 'customer'   
+      - targets:
+          - [ 'gateway:8080' ]
+        labels:
+          container: 'gateway' 
+      - targets:
+          - [ 'report:8080' ]
+        labels:
+          container: 'report'  
+      - targets:
+          - [ 'transaction:8080' ]
+        labels:
+          container: 'transaction'                                                                           
   - job_name: cadvisor
     static_configs:
       - targets:

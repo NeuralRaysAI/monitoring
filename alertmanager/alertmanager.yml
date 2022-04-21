@@ -1,17 +1,44 @@
-route:
-  group_by: [ alertname ]
-  receiver: 'mail' # default receiver
-  repeat_interval: 24h
-  routes:
-    - receiver: 'teams'
-      repeat_interval: 12h
-      matchers:
-        - severity="medium"
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.office365.com:587'
+  smtp_from: 'support@n7banking.com'
+  http_config:
+    tls_config:
+      insecure_skip_verify: true
 
-    - receiver: 'teams'
-      repeat_interval: 4h
-      matchers:
-        - severity="high"
+route:
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 30m
+  receiver: "email"
+
+  routes:
+    - receiver: "teams"
+      group_wait: 10s
+      match_re:
+        severity: critical|warning|high
+      continue: true
+
+    - receiver: "email"
+      group_wait: 10s
+      match_re:
+        severity: critical
+      continue: true
+
+# route:
+#   group_by: [ alertname ]
+#   receiver: 'mail' # default receiver
+#   repeat_interval: 24h
+#   routes:
+#     - receiver: 'teams'
+#       repeat_interval: 10s
+#       matchers:
+#         - severity="medium"
+
+#     - receiver: 'teams'
+#       repeat_interval: 10s
+#       matchers:
+#         - severity="high"
 
 
 receivers:

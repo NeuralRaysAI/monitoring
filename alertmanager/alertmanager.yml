@@ -23,7 +23,7 @@ route:
     - receiver: "email"
       group_wait: 10s
       match_re:
-        severity: critical
+        severity: critical|high
       continue: true
 
 # route:

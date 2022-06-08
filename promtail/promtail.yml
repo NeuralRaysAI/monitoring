@@ -12,14 +12,12 @@ client:
 
 scrape_configs:
 
-  - job_name: messages
+  - job_name: system
     static_configs:
     - targets:
         - localhost
       labels:
-        job: all-logs
-        env: dev
-        host: monitoring-dev
+        job: varlogs
         __path__: /var/log/*.log      
 
   - job_name: containers

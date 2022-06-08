@@ -3,3 +3,5 @@ grafana-data
 prometheus-data
 .idea
 .vscode
+loki/chunks
+loki/wal

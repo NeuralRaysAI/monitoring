@@ -3,7 +3,7 @@ groups:
     rules:
       - alert: InstanceDown 
         expr: up{job="services"} < 1 
-        for: 1m
+        for: 5m
         labels:
           severity: low
         annotations:
@@ -11,7 +11,7 @@ groups:
 
       - alert: InstanceDownCritical
         expr: up{job="services"} < 1 
-        for: 1m 
+        for: 5m 
         labels:
           severity: high
         annotations:
@@ -20,7 +20,7 @@ groups:
       # Alert for any instance that is unreachable for >2 minutes.
       - alert: MicorserviceDown
         expr: up == 0
-        for: 1m
+        for: 5m
         labels:
           severity: high
         annotations:
@@ -29,7 +29,7 @@ groups:
 
       - alert: high_load
         expr: node_load1 > 0.5
-        for: 2m
+        for: 5m
         labels:
           severity: page
         annotations:
@@ -50,7 +50,7 @@ groups:
 
       - alert: HostOutOfDiskSpace
         expr: (node_filesystem_avail{mountpoint="/"}  * 100) / node_filesystem_size{mountpoint="/"} < 50
-        for: 1s
+        for: 5m
         labels:
           severity: warning
         annotations:
@@ -70,7 +70,9 @@ groups:
       # disk space alert (with resource=<instance>:<mountpoint> event=disk_space
       - alert: disk_space
         expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) * 100 / node_filesystem_size_bytes > 5
+        for: 5m
         labels:
+          severity: warning       
           instance: '{{ $labels.instance }}:{{ $labels.mountpoint }}'
         annotations:
           value: '{{ humanize $value }}%'
@@ -78,9 +80,10 @@ groups:
       # disk space alert (with resource=<instance> event=disk_util:<mountpoint>
       - alert: disk_util
         expr: (node_filesystem_size_bytes - node_filesystem_free_bytes) * 100 / node_filesystem_size_bytes > 5
+        for: 5m
         labels:
+          severity: warning      
           instance: '{{ $labels.instance }}'
           event: '{alertname}:{{ $labels.mountpoint }}'  # python templating rendered by Alerta
         annotations:
           value: '{{ humanize $value }}%'
-

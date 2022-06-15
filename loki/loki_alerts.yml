@@ -3,7 +3,7 @@ groups:
     rules:
       - alert: ErrorLogAlerting
         expr: |
-          sum(count_over_time({container_name=~".+"} |~ "(?i)(error|trace|exception|debug)" [1m])) by (container_name) > 0
+          sum(count_over_time({host=~".+"} |~ "(?i)(error|trace|exception|debug)" [1m])) by (container_name) > 0
         annotations:
             title: "Error logged in {{ $labels.container_name }}"
             description: "A log message with the content 'error' or 'exception' has been found. Please investigate."

@@ -33,7 +33,7 @@ receivers:
         auth_username: 'N7support@NeuralRays.AI'
         auth_password: "Jux70745"
         from: 'N7support@NeuralRays.AI'
-        to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI,Pradeepkumar.A@NeuralRays.AI'
+        to: 'prasath.s@neuralrays.ai,krishna.k@neuralrays.ai,Prathap.KVB@NeuralRays.AI,Pradeepkumar.A@NeuralRays.AI,shridhar@linktia.com,aviraj@n7banking.com,kajal@n7banking.com,shridhar@n7banking.com,Selva.A@NeuralRays.AI,darsh.P@NeuralRays.AI,Kartheeswaran.R@NeuralRays.AI,Mageswari.R@NeuralRays.AI,Thangaraj.G@NeuralRays.AI,Balamurugan.r@NeuralRays.AI,Balakumaran.N@NeuralRays.AI,tushar@n7banking.com,shalini@n7banking.com,bhagyashri@n7banking.com,Shanmugasundaram.B@NeuralRays.AI'
 
 
   - name: 'teams'

@@ -13,3 +13,14 @@ datasources:
   isDefault: true
   version: 1
   editable: false
+- name: alertmanager
+  type: camptocamp-prometheus-alertmanager-datasource
+  access: server
+  org_id: 1
+  url: http://alertmanager:9093
+  version: 1
+  jsonData:
+    severity_critical: "4"
+    severity_high: "3"
+    severity_warning: "2"
+    severity_info: "1"  

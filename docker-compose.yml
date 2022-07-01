@@ -27,13 +27,17 @@ services:
     user: root
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro            
       - ./loki:/data/loki
       - ./loki/loki.yml:/etc/loki/local-config.yaml:ro
       - ./loki/loki_alerts.yml:/etc/loki/rules/alerts/rules.yml:ro
   promtail:
-    image: grafana/promtail:latest
+    image: grafana/promtail:2.2.0
     container_name: promtail
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro            
       - /var/log:/var/log
       - /var/lib/docker/containers:/var/lib/docker/containers
       - ./promtail:/etc/promtail-config/
@@ -54,10 +58,6 @@ services:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
-    logging:
-      driver: "json-file"
-      options: 
-        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
   cadvisor:
     image: 'google/cadvisor:latest'
     container_name: cadvisor
@@ -82,6 +82,8 @@ services:
     volumes:
       - "./alertmanager:/config"
       - ./alertmanager-data:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
     command: --config.file=/config/alertmanager.yml --log.level=debug
 
   # elasticsearch:
@@ -156,7 +158,7 @@ services:
 
   prom2teams:
     image: idealista/prom2teams:2.7.0
-    restart: unless-stopped
+    restart: always
     environment:
       PROM2TEAMS_CONNECTOR: ${WEBHOOK}
     ports:

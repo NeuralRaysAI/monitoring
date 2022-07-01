@@ -5,3 +5,4 @@ prometheus-data
 .vscode
 loki/chunks
 loki/wal
+loki/index

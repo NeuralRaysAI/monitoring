@@ -1,31 +1,18 @@
 groups:
-  - name: error-log-alerting
+  - name: Warnlogs
     rules:
-      - alert: ErrorLogAlerting
+      - alert: WarnLogs
         expr: |
-          sum(count_over_time({host=~".+"} |~ "(?i)(error|warn|exception)" [1m])) by (container_name) > 0
-        annotations:
-            title: "Error logged in {{ $labels.container_name }}"
-            description: "A log message with the content 'error' or 'exception' has been found. Please investigate."
+          sum(count_over_time({container_name=~ ".+"} |~ "(?i)(WARN|ERROR)" [1m])) by (container_name) > 0       
+          #count_over_time({container_name=~ "digital-service"}[1m] |= "ERROR")       
+          #  count_over_time({container_name="digital-service"} |= "ERROR" [1m]
+          #   sum(count_over_time({container_name=~"login-service"} |~ "(?i)(WARN|ERROR)" [1m])) by (container_name) > 0             
+          #       count_over_time({container_name=~".+"}[1m] |~ "WARN")
+          #          count_over_time({container_name=~".+"} |~ "WARN" [1m])) 
+        for: 10s
         labels:
-            severity: warning
-  - name: rate-alerting
-    rules:
-    - alert: HighLogRate
-      expr: |
-           count_over_time(({host=~".+"})[1m]) >=0
-      for: 1m            
-  - name: error-log
-    rules:
-      - alert: ErrorLog
-        expr: | 
-             count_over_time({host=~".+"}[1m] | = "ERROR"  
-        for: 1m      
-  - name: NumberOfErrors
-    rules:
-    - alert: logs_error_count
-      expr: rate({host=~".+"} |~ "[Ee]rror"[1m]) > 5
-      for: 1m
-      labels:
-        severity: P4
-        Source: Loki        
+          severity: warning
+          team: devops
+        annotations:
+          title: "{{$value}} Errors occurred in {{ $labels.container_name }} application logs"
+          description: "A log message with the content 'error' or 'Warn' has been found. Please investigate."
